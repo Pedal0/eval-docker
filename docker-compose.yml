@@ -4,20 +4,17 @@ services:
       context: ./backend
     ports:
       - "5000:5000"
-    networks:
-      - app-network
     environment:
       - FLASK_ENV=production
     depends_on:
       - mysql
+      - tensorflow-service
 
   frontend:
     build:
       context: ./frontend
     ports:
       - "80:80"
-    networks:
-      - app-network
     environment:
       - NODE_ENV=production
 
@@ -30,9 +27,6 @@ services:
       - MYSQL_DATABASE=mydatabase
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
-    networks:
-      - app-network
-
   phpmyadmin:
     image: phpmyadmin
     environment:
@@ -40,14 +34,18 @@ services:
       - MYSQL_ROOT_PASSWORD=rootpassword
     ports:
       - "8080:80"
-    networks:
-      - app-network
     depends_on:
       - mysql
 
-networks:
-  app-network:
-    driver: bridge
+  tensorflow-service:
+    image: tensorflow/serving
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/models
+    environment:
+      - MODEL_NAME=my_model
 
 volumes:
   db-data:
+  models:
