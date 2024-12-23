@@ -1,89 +1,51 @@
-## Built with
+# TodoApp
 
-The project was developed from scratch with Frontend and Backend technologies, for the communication between the client and the server I implemented a REST API, which is responsible for returning the necessary data in JSON format to the client:
+This project is a Todo application consisting of an Angular frontend and a Flask backend. The project uses Docker and Docker Compose to facilitate deployment and execution.
 
-- Frontend:
-  - Angular
-  - SCSS
-  - PrimeNG Components
+## Project Structure
 
-- Backend:
-  - Python (Flask)
-  - SQLite (As database manager)
-  - Flask Migrate (To perform migrations)
-  - SQLAlchemy and Flask SQLAlchemy (Python SQL toolkit and ORM that gives application developers the full power and flexibility of SQL)
-  - REST API (For communication between client and server)
+The project is structured as follows:
 
-## Project requirements and how to use it
+- **backend/**: Contains the backend source code in Flask.
+- **frontend/**: Contains the frontend source code in Angular.
+- **docker-compose.yml**: Configuration file for Docker Compose.
+- **models/**: Contains TensorFlow models for the prediction service.
 
-For the project you must run both development environments at the same time, both the Frontend and the Backend. In the Frontend you will find JavaScript technologies (Angualr) and in the Backend you will find Python technologies and tools (Flask), so you must have NodeJS and Python installed on your computer (As a reference this project was developed with version 3.9.6 of Python and 18.12.1 of NodeJS).
+## Dockerfile
 
-I leave you links to NodeJS and Python for installation:
-  - [NodeJS website](https://nodejs.org/en/)
-  - [Python website](https://www.python.org/)
+The project uses two Dockerfiles:
 
-First of all download the project to start using it, do it from the terminal:
+- One for the backend, located in `Dockerfile`.
+  The Dockerfile for the backend uses a Python image, copies the source code, installs the dependencies, and exposes port 5000 to run the Flask application.
 
-```shell
-$ git clone https://github.com/Skizaru/todo_app.git
+- One for the frontend, located in `Dockerfile`.
+  The Dockerfile for the frontend uses a Node.js image to build the Angular application, then an Nginx image to serve the built application, exposing port 80.
 
-$ cd todo_app
+## Docker Compose
+
+The `docker-compose.yml` file defines the services for the backend, frontend, MySQL, phpMyAdmin, and the TensorFlow service. It allows you to start all the necessary services with a single command.
+
+## Installation and Launch
+
+To install and launch the project with a single command, make sure you have Docker and Docker Compose installed on your machine. Then, run the following command at the root of the project:
+
+```sh
+docker-compose up --build
 ```
 
-If you did it correctly and there were no problems, you should see these folders in your terminal:
+This command will build the Docker images for the backend and frontend, then start all the services defined in the `docker-compose.yml` file.
 
-```shell
-/backend
-/frontend
-README.md
+## Access to Services
 
-### Frontend
+- **Frontend**: [http://localhost](http://localhost)
+- **Backend**: [http://localhost:5000](http://localhost:5000)
+- **phpMyAdmin**: [http://localhost:8080](http://localhost:8080)
+- **TensorFlow Serving**: [http://localhost:8501](http://localhost:8501)
 
-If you already have NodeJS installed on your computer perform the following steps to run the Frontend (Remember that the Backend must be running):
+## Database Seeding
 
-1. Move to the `/frontend` folder and run the following command to install the necessary:
+To insert initial data into the database, run the `seed.py` script in the backend container.
 
-```shell
-# This will install what you need for the Frontend (npm comes with NodeJS after installation)
-$ npm install
-```
+## Conclusion
 
-2. Then you will need to run the following command to start running the Frontend:
-
-```shell
-$ npm start
-```
-
-3. That's all for the Frontend, if you haven't run the Backend yet, continue with the next section (Backend)
-
-### Backend
-
-If you already have Python installed on your computer perform the following steps to run the Backend
-
-1. Move to the `/backend` folder and run the following command to create a virtual development environment with Python:
-
-```shell
-# If it doesn't work this way try "python3", this will depend on how you installed Python on your computer
-$ python -m venv venv
-```
-
-2. Now activate the development environment and install the necessary requirements found in the `requirements.txt` file:
-
-```shell
-# This is how it is done in Linux, in Windows it is as follows "venv\Scripts\activate"
-$ . venv/bin/activate
-# Now install the necessary requirements using "pip" or "pip3",
-# this will depend on how you installed Python on your computer
-(venv) $ pip install -r requirements.txt
-
-### REST API
-
-Everything related to the API is inside `flaskr/`. The following table summarizes the routes that were implemented:
-
-| HTTP Method | Resource URL           | Notes                                   |
-| ----------- | -------------------    | --------------------------------------- |
-| `GET`       | */api/v1/tasks*        | Return the collection of all tasks.     |
-| `GET`       | */api/v1/tasks/id*     | Return a single task.                   |
-| `POST`      | */api/v1/tasks*        | Register a new task.                    |
-| `PUT`       | */api/v1/tasks/id*     | Modify the values of a task.            |
-| `DELETE`    | */api/v1/tasks/id*     | Delete a task from the collection.      |
+This project uses Docker and Docker Compose to simplify the deployment and execution of the Todo application. By following the instructions above, you can easily install and launch the project on your local machine.
