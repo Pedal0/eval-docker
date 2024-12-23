@@ -45,7 +45,3 @@ This command will build the Docker images for the backend and frontend, then sta
 ## Database Seeding
 
 To insert initial data into the database, run the `seed.py` script in the backend container.
-
-## Conclusion
-
-This project uses Docker and Docker Compose to simplify the deployment and execution of the Todo application. By following the instructions above, you can easily install and launch the project on your local machine.
